@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  #csharpier-server:
+  #  build: .
+  #  container_name: csharpier_server
+  #  ports:
+  #    - "8090:80"
+  #  restart: always
+  #  environment:
+  #    - DOTNET_CLI_TELEMETRY_OPTOUT=1
+
+
+  csharpier-server:
+    build:
+      dockerfile: Server/Dockerfile
+      context: .
+    container_name: csharpier_server
+    ports:
+      - "8090:80"
+    restart: always
+    environment:
+      - DOTNET_CLI_TELEMETRY_OPTOUT=1

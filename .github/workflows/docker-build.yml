@@ -1,0 +1,49 @@
+name: Build and Push Docker Image
+
+# Trigger: Der Workflow startet, sobald Code in den 'main' Branch gepusht wird
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    
+    # Berechtigungen, die für das Schreiben in die GitHub Registry benötigt werden
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      # 1. Code aus dem Repository auschecken
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      # 2. Bei der GitHub Container Registry (GHCR) anmelden
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      
+      # 3. Docker-Metadaten extrahieren (Tags, Labels)
+      - name: Extract Metadata for Docker
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ghcr.io/${{ github.repository }}
+          tags: |
+            type=ref,event=branch
+            type=sha,format=short
+            latest
+      
+      # 4. Das Docker Image bauen und pushen
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: ./Dockerfile
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}

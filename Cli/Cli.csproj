@@ -7,6 +7,21 @@
     <RootNamespace>Sseidelmann.CSharpier.Cli</RootNamespace>
     <AssemblyName>Sseidelmann.CSharpier.Cli</AssemblyName>
     <PackageId>Sseidelmann.CSharpier.Cli</PackageId>
+
+    <!-- .NET Tool Settings -->
+    <PackAsTool>true</PackAsTool>
+    <ToolCommandName>csharpier-codeinsights</ToolCommandName>
+    <PackageOutputPath>./nupkg</PackageOutputPath>
+
+    <!-- NuGet Package Settings -->
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageVersion>1.0.0</PackageVersion>
+    <Authors>Sebastian Seidelmann</Authors>
+    <Description>A CLI tool to run CSharpier and generate code insight reports for Bitbucket.</Description>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/sebastianseidelmann/CsharpierCodeInsights</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/sebastianseidelmann/CsharpierCodeInsights</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
   </PropertyGroup>
 
   <ItemGroup>
